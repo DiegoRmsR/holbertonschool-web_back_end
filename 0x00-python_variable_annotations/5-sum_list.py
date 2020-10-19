@@ -5,10 +5,10 @@ from typing import List
 
 def sum_list(input_list: List[float]) -> float:
 	"""
-	Args: 
+	Args:
 		input_list: Float numbers
 	Return:
 		Sum of the float numbers
 	"""
 
-    return sum(input_list)
+	return sum(input_list)
