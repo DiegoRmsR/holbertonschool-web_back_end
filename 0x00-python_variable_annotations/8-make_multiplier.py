@@ -11,7 +11,9 @@ def make_multiplier(multiplier: float) -> Callable[[float], float]:
     Return:
         multiplies a float by multiplier
 	"""
-	def f(n: float) -> float:
-		return float(n * multiplayer)
 
-	return f
+    def f(n: float) -> float:
+        """ multiplies a float by multiplier """
+        return float(n * multiplier)
+
+    return f
