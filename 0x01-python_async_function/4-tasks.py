@@ -10,7 +10,7 @@ from typing import List
 task_wait_random = __import__('3-tasks').wait_random
 
 
-async def task_wait_n(n: int = 0, max_delay: int = 10) ->List[float]:
+async def task_wait_n(n: int = 0, max_delay: int = 10) -> List[float]:
     """
     Args:
         max_delay: max wait
@@ -22,7 +22,7 @@ async def task_wait_n(n: int = 0, max_delay: int = 10) ->List[float]:
     queue = []
 
     for _ in range(n):
-        queue.append(task_wait_random(max_delay))
+        queue.append(task_wait_random (max_delay))
 
     for i in asyncio.as_completed(queue):
         delay = await i
