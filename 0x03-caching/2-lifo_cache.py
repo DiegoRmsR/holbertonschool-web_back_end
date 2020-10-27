@@ -1,7 +1,8 @@
-from base_caching import BaseCaching
+#!/usr/bin/python3
 """
 LIFO caching
 """
+from base_caching import BaseCaching
 
 
 class LIFOCache(BaseCaching):
