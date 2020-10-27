@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+"""
+basic dictionary
+"""
+
 from base_caching import BaseCaching
-"""
- Basic dictionary
-"""
 
 
 class BasicCache(BaseCaching):
