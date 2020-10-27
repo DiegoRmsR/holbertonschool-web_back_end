@@ -18,12 +18,12 @@ class FIFOCache(BaseCaching):
         """
         Add an item from cache
         """
-        self.cache_data[key] = item
         if key is not None or item is not None:
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
                 keydis = list(self.cache_data.keys())[0]
                 del self.cache_data[keydis]
                 print("DISCARD: {}".format(keydis))
+            self.cache_data[key] = item
 
     def get(self, key):
         """
