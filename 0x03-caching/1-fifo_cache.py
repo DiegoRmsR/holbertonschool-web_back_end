@@ -30,4 +30,4 @@ class FIFOCache(BaseCaching):
         Get items from cache
         """
         if key is not None or key:
-            self.cache_data.get(key)
+            return self.cache_data.get(key)
