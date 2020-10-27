@@ -1,48 +1,49 @@
-from base_caching import BaseCaching
+#!/usr/bin/python3
 """
-LRUCache caching
+LRU caching exercise
 """
+
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LRUCache(BaseCaching):
     """
-    LRUCache cache inherits from BaseCaching and is a caching system
-
-    Discard the least recently used item (LRU algorithm)
+    LRU cache eviction system
     """
+
     def __init__(self):
         """
-        initialiaze
+        call parents
         """
-        super().__init__()
+        BaseCaching.__init__(self)
         self.order = []
 
     def put(self, key, item):
         """
-        Add an item from cache
+        put a value in cache
+        :param key: key
+        :param item: value
+        :return: None
         """
         if key is None or item is None:
             pass
         else:
             self.cache_data[key] = item
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                keydis = self.order.pop(0)
-                del self.cache_data[keydis]
-                print("DISCARD: {}".format(keydis))
-            else:
-                del self.cache_data[key]
 
             if key in self.order:
                 self.order.remove(key)
-                self.order.append(key)
-            else:
-                self.order.append(key)
+            self.order.append(key)
 
-            self.cache_data[key] = item
+            if len(self.order) > BaseCaching.MAX_ITEMS:
+                last = self.order.pop(0)
+                self.cache_data.pop(last)
+                print('DISCARD: {}'.format(last))
 
     def get(self, key):
         """
-        Get items from cache
+        get a value from cache
+        :param key: key
+        :return: value or None
         """
         try:
             if key in self.order:
