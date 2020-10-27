@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-LRU caching exercise
+LRUCache caching
 """
 
 BaseCaching = __import__('base_caching').BaseCaching
@@ -8,7 +8,8 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 class LRUCache(BaseCaching):
     """
-    LRU cache eviction system
+    LRUCache cache inherits from BaseCaching and is a caching system
+    Discard the least recently used item (LRU algorithm)
     """
 
     def __init__(self):
@@ -20,10 +21,7 @@ class LRUCache(BaseCaching):
 
     def put(self, key, item):
         """
-        put a value in cache
-        :param key: key
-        :param item: value
-        :return: None
+        Add an item from cache
         """
         if key is None or item is None:
             pass
@@ -41,9 +39,7 @@ class LRUCache(BaseCaching):
 
     def get(self, key):
         """
-        get a value from cache
-        :param key: key
-        :return: value or None
+        Get items from cache
         """
         try:
             if key in self.order:
