@@ -48,10 +48,14 @@ class Server:
         return:
             appropriate page of the dataset (i.e. the correct list of rows).
         """
-        assert 0 < isinstance(page, int)
-        assert 0 < isinstance(page_size, int)
-        i_range = index_range(page, page_size)
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page > 0
+
         self.dataset()
+
         if self.__dataset is None:
             return []
-        return self.__dataset[i_range[0]:i_range[1]]
+
+        i_range = index_range(page, page_size)
+        data = self.__dataset[i_range[0]:i_range[1]]
+        return data
