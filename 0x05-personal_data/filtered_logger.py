@@ -7,6 +7,26 @@ import logging
 from typing import List
 
 
+PII_FIELDS: List[str] = ['name', 'email', 'phone', 'ssn', 'ip']
+
+
+def get_logger() -> logging.Logger:
+    """
+    Args:
+        Void
+    Return:
+        logging.Logger
+    """
+    user_sata_logger = logging.getLogger("user_data")
+    user_sata_logger.setLevel(logging.INFO)
+    stream_handler = logging.StreamHandler()
+    formatter = RedactingFormatter(fields=PII_FIELDS)
+    stream_handler.setFormatter(formatter)
+    user_sata_logger.addHandler(stream_handler)
+
+    return user_sata_logger
+
+
 def filter_datum(fields: List, redaction: str,
                  message: str, separator: str) -> str:
     """
