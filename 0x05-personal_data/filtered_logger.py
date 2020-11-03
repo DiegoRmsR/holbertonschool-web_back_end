@@ -5,6 +5,8 @@
 import re
 import logging
 from typing import List
+from mysql.connector import (connection)
+import os
 
 
 PII_FIELDS: List[str] = ['name', 'email', 'phone', 'ssn', 'ip']
@@ -25,6 +27,23 @@ def get_logger() -> logging.Logger:
     user_sata_logger.addHandler(stream_handler)
 
     return user_sata_logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Args:
+        Void
+    Return:
+        Connect to secure database
+    """
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    hosting = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db = os.getenv('PERSONAL_DATA_DB_NAME')
+    cnx = connection.MySQLConnection(username=username, password=password',
+                                     host=hosting,
+                                     database=db)
+    return cnx
 
 
 def filter_datum(fields: List, redaction: str,
