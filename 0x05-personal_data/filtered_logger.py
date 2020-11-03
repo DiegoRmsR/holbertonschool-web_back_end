@@ -95,3 +95,31 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum(self.fields, self.REDACTION,
                                   record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
+
+
+def main():
+    """
+    Read and filter data
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    logger = get_logger()
+
+    for row in cursor:
+        """ zip Element combine two tuples to generate
+            a new tuple combined
+        """
+        for row in cursor:
+            data_row: str = ''
+            for key, value in zip(headers, row):
+                data_row = ''.join(f'{key}={str(value)};')
+
+            logger.info(data_row)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == '__main__':
+    main()
