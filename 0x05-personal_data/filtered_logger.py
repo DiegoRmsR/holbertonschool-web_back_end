@@ -12,6 +12,28 @@ import os
 PII_FIELDS: List[str] = ['name', 'email', 'phone', 'ssn', 'ip']
 
 
+def filter_datum(fields: List, redaction: str,
+                 message: str, separator: str) -> str:
+    """
+    Agrs:
+        fields: a list of strings representing
+        all fields to obfuscate
+        redaction: a string representing by
+        what the field will be obfuscated
+        message: a string representing the log line
+        separator: a string representing by which
+        character is separating all fields in the
+        log line (message)
+    Return:
+        obfuscated text
+    """
+    for field in fields:
+        message = re.sub(rf'(?<={field}=).*?(?={separator})',
+                         redaction,  message)
+
+    return message
+
+
 def get_logger() -> logging.Logger:
     """
     Args:
@@ -44,28 +66,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                      host=hosting,
                                      database=db)
     return cnx
-
-
-def filter_datum(fields: List, redaction: str,
-                 message: str, separator: str) -> str:
-    """
-    Agrs:
-        fields: a list of strings representing
-        all fields to obfuscate
-        redaction: a string representing by
-        what the field will be obfuscated
-        message: a string representing the log line
-        separator: a string representing by which
-        character is separating all fields in the
-        log line (message)
-    Return:
-        obfuscated text
-    """
-    for field in fields:
-        message = re.sub(rf'(?<={field}=).*?(?={separator})',
-                         redaction,  message)
-
-    return message
 
 
 class RedactingFormatter(logging.Formatter):
