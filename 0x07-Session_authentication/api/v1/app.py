@@ -10,6 +10,7 @@ import os
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
@@ -70,11 +71,14 @@ def before_request() -> str:
     if not (auth.require_auth(request.path, excluded_path)):
         return
 
-    if (auth.authorization_header(request)) is None:
+    if auth.authorization_header(request) is None:
         abort(401)
 
-    if (auth.current_user(request)) is None:
+    current_user = auth.current_user(request)
+    if (current_user) is None:
         abort(403)
+
+    request.current_user = current_user
 
 
 if __name__ == "__main__":
