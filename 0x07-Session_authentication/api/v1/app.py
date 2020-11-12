@@ -68,12 +68,12 @@ def before_request() -> str:
     if auth is None:
         return
 
-    excluded_path = ['/api/v1/status/',
-                     '/api/v1/unauthorized/',
-                     '/api/v1/forbidden/',
-                     '/api/v1/auth_session/login/']
+    excluded_paths = ['/api/v1/status/',
+                      '/api/v1/unauthorized/',
+                      '/api/v1/forbidden/',
+                      '/api/v1/auth_session/login/']
 
-    if not (auth.require_auth(request.path, excluded_path)):
+    if not auth.require_auth(request.path, excluded_paths):
         return
 
     if auth.authorization_header(request) is None \
@@ -81,14 +81,7 @@ def before_request() -> str:
         abort(401)
 
     current_user = auth.current_user(request)
-
-    if (current_user) is None:
+    if current_user is None:
         abort(403)
 
     request.current_user = current_user
-
-
-if __name__ == "__main__":
-    host = getenv("API_HOST", "0.0.0.0")
-    port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)
