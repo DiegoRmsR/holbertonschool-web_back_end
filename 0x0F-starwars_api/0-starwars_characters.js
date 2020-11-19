@@ -1,4 +1,7 @@
 #!/usr/bin/node
+/*
+  Star Wars Characters
+*/
 const argv = process.argv;
 const urlFilm = 'https://swapi-api.hbtn.io/api/films/';
 const urlMovie = `${urlFilm}${argv[2]}/`;
@@ -19,7 +22,7 @@ request(urlMovie, function (error, response, body) {
   }
 });
 
-function CharRequest (idx, url, characters, limit) {
+function CharRequest(idx, url, characters, limit) {
   if (idx === limit) {
     return;
   }
