@@ -23,8 +23,7 @@ def count_calls(method: Callable) -> Callable:
 
 def call_history(method: Callable) -> Callable:
     """ Decorator to store the history of inputs and
-    outputs for a particular function.
-    """
+    outputs for a particular function"""
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -68,7 +67,7 @@ def replay(fn: Callable):
 
 
 class Cache:
-    """ Class for implementing a Cache """
+    """ Class for implementing a Cache"""
 
     def __init__(self):
         """ Constructor Method """
@@ -79,8 +78,7 @@ class Cache:
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store the input data in Redis using a
-        random key and return the key.
-        """
+        random key and return the key"""
         random_key = str(uuid4())
         self._redis.set(random_key, data)
 
@@ -96,12 +94,12 @@ class Cache:
         return value
 
     def get_str(self, key: str) -> str:
-        """ Parameterizes a value from redis to str """
+        """ Parameterizes a value from redis to str"""
         value = self._redis.get(key)
         return value.decode("utf-8")
 
     def get_int(self, key: str) -> int:
-        """ Parameterizes a value from redis to int """
+        """ Parameterizes a value from redis to int"""
         value = self._redis.get(key)
         try:
             value = int(value.decode("utf-8"))
